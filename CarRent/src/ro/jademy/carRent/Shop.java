@@ -28,26 +28,26 @@ public class Shop {
         Salesman s3 = new Salesman("Slavescu", "Marius", "sm", "12345");
         salesmens.addAll(Arrays.asList(s1, s2, s3));
 
-        Duster duster = new Duster("Dacia", "Duster", "SUV",
+        Car duster = new Duster("Dacia", "Duster", "SUV",
                 new Engine(105, 1598), 5, "gasoline",
                 "Orange Atacama", "manual", 2018, new BigDecimal(22000),
                 "Available");
 
-        Sandero sandero = new Sandero("Dacia", "Sandero", "SUV",
+        Car sandero = new Sandero("Dacia", "Sandero", "SUV",
                 new Engine(90, 1461), 5, "diesel",
                 "Gris Platine", "automatic", 2016, new BigDecimal(20000),
                 "Available");
-        daciaCars.addAll(Arrays.asList(duster, sandero));
+        //daciaCars.addAll(Arrays.asList(duster, sandero));
 
-        A4 a4 = new A4("Audi", "A4", "Sedan",
+        Car a4 = new A4("Audi", "A4", "Sedan",
                 new Engine(110, 1896), 4, "diesel",
                 "Gray", "automatic", 2017, new BigDecimal(18000),
                 "Available");
-        A6 a6 = new A6("Audi", "A6", "Sedan",
+        Car a6 = new A6("Audi", "A6", "Sedan",
                 new Engine(133, 2309), 4, "gasoline",
                 "Yellow", "manual", 2017, new BigDecimal(18000),
                 "Rented");
-        audiCars.addAll(Arrays.asList(a4, a6));
+       // audiCars.addAll(Arrays.asList(a4, a6));
 
         cars.addAll(Arrays.asList(duster, sandero, a4, a6));
     }
@@ -69,6 +69,7 @@ public class Shop {
                 }
             }
         }
+
         System.out.println("Wrong username or password , try again.");
         return true;
     }
@@ -98,6 +99,7 @@ public class Shop {
         switch (number) {
             case 1:
                 showListAllCars();
+                showFiterMenu();
                 break;
             case 2:
                 showListAvailableCars();
@@ -162,6 +164,7 @@ public class Shop {
 
     public void checkIncome() {
 
+        BigDecimal income=new BigDecimal(sc.nextLine());
 
     }
 
@@ -174,7 +177,7 @@ public class Shop {
     }
 
 
-    public void showListMenuOptions() {
+    public void showFiterMenu() {
 
         System.out.println("Select an action from below:");
         System.out.println("1. Filter by make");
@@ -203,15 +206,15 @@ public class Shop {
                 showFilterByBudget();
                 break;
             case 4:
-                showListMenuOptions();
+                backToPreviousMenu();
                 break;
         }
     }
 
     public void showFilterByMake() {
         System.out.println("Insert the desired car");
-        Scanner sc = new Scanner(System.in);
-        String makeCar = sc.nextLine();
+
+        String makeCar = sc.next();
         showHeader();
         System.out.println();
         for (Car car : cars) {
@@ -223,8 +226,8 @@ public class Shop {
 
     public void showFilterByModel() {
         System.out.println("Insert the desired car");
-        Scanner sc = new Scanner(System.in);
-        String modelCar = sc.nextLine();
+
+        String modelCar = sc.next();
         showHeader();
         System.out.println();
         for (Car car : cars) {
@@ -236,7 +239,7 @@ public class Shop {
 
     public void showFilterByBudget() {
         System.out.println();
-        Scanner sc = new Scanner(System.in);
+
         System.out.println("Enter the available amount");
         BigDecimal availableAmount = sc.nextBigDecimal();
         showHeader();
