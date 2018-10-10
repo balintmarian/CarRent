@@ -4,6 +4,7 @@ import ro.jademy.carRent.car.Audi.A4;
 import ro.jademy.carRent.car.Audi.A6;
 import ro.jademy.carRent.car.Audi.Audi;
 import ro.jademy.carRent.car.Car;
+import ro.jademy.carRent.car.CarState;
 import ro.jademy.carRent.car.Dacia.Dacia;
 import ro.jademy.carRent.car.Dacia.Duster;
 import ro.jademy.carRent.car.Dacia.Sandero;
@@ -13,6 +14,7 @@ import ro.jademy.carRent.people.Salesman;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class Shop {
@@ -47,7 +49,7 @@ public class Shop {
                 new Engine(133, 2309), 4, "gasoline",
                 "Yellow", "manual", 2017, new BigDecimal(18000),
                 "Rented");
-       // audiCars.addAll(Arrays.asList(a4, a6));
+        // audiCars.addAll(Arrays.asList(a4, a6));
 
         cars.addAll(Arrays.asList(duster, sandero, a4, a6));
     }
@@ -72,6 +74,75 @@ public class Shop {
 
         System.out.println("Wrong username or password , try again.");
         return true;
+    }
+
+    public void carRental() {
+
+        System.out.println();
+
+        System.out.println("Enter the desired car  model ");
+
+        String carModel = sc.next();
+
+
+        GregorianCalendar startDate = new GregorianCalendar();
+
+        GregorianCalendar endDate = new GregorianCalendar();
+
+        for (Car car : cars) {
+
+            if (car.getModel().equals(carModel)) {
+
+                System.out.println("Enter start date");
+
+                startDate = dateEnter();
+
+                System.out.println("Enter end date");
+
+                endDate = dateEnter();
+
+                car.rentCar(startDate, endDate);
+
+                System.out.println(startDate.getTime());
+
+                System.out.println(endDate.getTime());
+
+                showHeader();
+
+                car.showCarSpecifications();
+
+            }
+
+        }
+
+    }
+
+
+    public GregorianCalendar dateEnter() {
+
+        GregorianCalendar date = new GregorianCalendar();
+
+        System.out.println("Enter Year ");
+
+        int year = sc.nextInt();
+
+        System.out.println("Enter Month ");
+
+        int month = sc.nextInt();
+
+        System.out.println("Enter Day ");
+
+        int day = sc.nextInt();
+
+        date.set(GregorianCalendar.YEAR, year);
+
+        date.set(GregorianCalendar.MONTH, (month - 1));
+
+        date.set(GregorianCalendar.DATE, day);
+
+        return date;
+
+
     }
 
 
@@ -164,7 +235,29 @@ public class Shop {
 
     public void checkIncome() {
 
-        BigDecimal income=new BigDecimal(sc.nextLine());
+        BigDecimal sum = new BigDecimal(0);
+
+        BigDecimal finalPrice = new BigDecimal(0);
+
+        CarState carState = new CarState();
+
+        for (Car car : cars) {
+
+            if (car.getCarState().isRented()) {
+
+                GregorianCalendar startDate = carState.getStartDate();
+
+                GregorianCalendar endDate = carState.getStartDate();;
+
+                finalPrice = daysBetween(startDate, endDate).multiply(car.getBasePrice());
+
+                sum = sum.add(finalPrice);
+
+                System.out.println(sum);
+
+            }
+
+        }
 
     }
 
@@ -249,6 +342,15 @@ public class Shop {
                 car.showCarSpecifications();
             }
         }
+    }
+    public BigDecimal daysBetween(GregorianCalendar startDate, GregorianCalendar endDate) {
+
+        long differenceInSeconds = (endDate.getTimeInMillis() - startDate.getTimeInMillis()) / (1000 * 60 * 60 * 24);
+
+        return new BigDecimal(differenceInSeconds);
+
+
+
     }
 
     public void backToPreviousMenu() {

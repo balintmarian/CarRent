@@ -3,6 +3,7 @@ package ro.jademy.carRent.car;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public abstract class Car {
     private String make;
@@ -16,8 +17,9 @@ public abstract class Car {
     private BigDecimal basePrice;
     private Integer year;
     private String availability;
-    private Time startDate;
-    private Time recoveryDate;
+    //private Time startDate;
+    //private Time recoveryDate;
+    private CarState carState=new CarState();
 
 //    public Car(String startDate,String recoveryDate){
 //        this.startDate=startDate;
@@ -39,22 +41,30 @@ public abstract class Car {
         this.availability = availability;
     }
 
-    public Car(String make, String model, String carType, Engine engine, Integer doorNumber, String fuelType,
-               String color, String transmissionType, Integer year, BigDecimal basePrice, String availability,
-               Time startDate, Time recoveryDate) {
-        this.make = make;
-        this.model = model;
-        this.carType = carType;
-        this.engine = engine;
-        this.doorNumber = doorNumber;
-        this.fuelType = fuelType;
-        this.color = color;
-        this.transmissionType = transmissionType;
-        this.year = year;
-        this.basePrice = basePrice;
-        this.availability = availability;
-        this.startDate = startDate;
-        this.recoveryDate = recoveryDate;
+//    public Car(String make, String model, String carType, Engine engine, Integer doorNumber, String fuelType,
+//               String color, String transmissionType, Integer year, BigDecimal basePrice, String availability,
+//               Time startDate, Time recoveryDate) {
+//        this.make = make;
+//        this.model = model;
+//        this.carType = carType;
+//        this.engine = engine;
+//        this.doorNumber = doorNumber;
+//        this.fuelType = fuelType;
+//        this.color = color;
+//        this.transmissionType = transmissionType;
+//        this.year = year;
+//        this.basePrice = basePrice;
+//        this.availability = availability;
+//        this.startDate = startDate;
+//        this.recoveryDate = recoveryDate;
+//    }
+
+    public CarState getCarState() {
+        return carState;
+    }
+
+    public void setCarState(CarState carState) {
+        this.carState = carState;
     }
 
     public String getMake() {
@@ -128,5 +138,26 @@ public abstract class Car {
                 getColor(), getTransmissionType(), getYear(),
                 getBasePrice(), getAvailability());
         System.out.println(specifications);
+    }
+    public void rentCar(GregorianCalendar start, GregorianCalendar end) {
+
+        carState.setRented(true);
+
+        carState.setStartDate(start);
+
+        carState.setFinalDate(end);
+
+    }
+
+
+
+    public void returnCar() {
+
+        carState.setRented(false);
+
+        carState.setStartDate(null);
+
+        carState.setFinalDate(null);
+
     }
 }
