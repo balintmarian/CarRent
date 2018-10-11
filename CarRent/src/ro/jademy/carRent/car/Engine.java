@@ -1,6 +1,8 @@
 package ro.jademy.carRent.car;
 
-public class Engine {
+import java.util.Objects;
+
+public class Engine implements Comparable<Engine> {
     private int horsePawer;
     private int capacity;
 
@@ -24,6 +26,25 @@ public class Engine {
                 "horsePawer=" + horsePawer +
                 ", capacity=" + capacity +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Engine engine = (Engine) o;
+        return horsePawer == engine.horsePawer &&
+                capacity == engine.capacity;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(horsePawer, capacity);
+    }
+
+    @Override
+    public int compareTo(Engine o) {
+        return 0;
     }
 }
 

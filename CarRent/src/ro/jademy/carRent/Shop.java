@@ -18,9 +18,11 @@ import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class Shop {
+    //hashSet
     private ArrayList<Salesman> salesmens = new ArrayList<>();
     private ArrayList<Dacia> daciaCars = new ArrayList<>();
     private ArrayList<Audi> audiCars = new ArrayList<>();
+    //hashMap
     private ArrayList<Car> cars = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
 
