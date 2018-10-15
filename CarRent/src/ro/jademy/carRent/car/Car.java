@@ -2,7 +2,6 @@ package ro.jademy.carRent.car;
 
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public abstract class Car implements Comparable<Car> {
@@ -19,7 +18,7 @@ public abstract class Car implements Comparable<Car> {
     private String availability;
     //private Time startDate;
     //private Time recoveryDate;
-    private CarState carState=new CarState();
+    private CarState carState = new CarState();
 
 //    public Car(String startDate,String recoveryDate){
 //        this.startDate=startDate;
@@ -134,11 +133,12 @@ public abstract class Car implements Comparable<Car> {
     public void showCarSpecifications() {
         String specifications = String.format("|| %-10s || %-10s || %-10s || %-12s || %-12s || %-5s || %-10s || %-15s " +
                         "|| %-15s || %-10s || %-10s || %-10s ||", getMake(), getModel(), getCarType(),
-                getEngine().getHorsePawer(), getEngine().getCapacity(), getDoorNumber(), getFuelType(),
+                getEngine().getHorsePower(), getEngine().getCapacity(), getDoorNumber(), getFuelType(),
                 getColor(), getTransmissionType(), getYear(),
                 getBasePrice(), getAvailability());
         System.out.println(specifications);
     }
+
     public void rentCar(GregorianCalendar start, GregorianCalendar end) {
 
         carState.setRented(true);
@@ -148,7 +148,6 @@ public abstract class Car implements Comparable<Car> {
         carState.setFinalDate(end);
 
     }
-
 
 
     public void returnCar() {
@@ -164,16 +163,47 @@ public abstract class Car implements Comparable<Car> {
 
     @Override
     public int compareTo(Car o) {
-       if(make.compareTo(o.make)==0){
-          if(model.compareTo(o.model)==0){
-              if(engine.equals(o.engine)){
+        if (make.compareTo(o.make) != 0) {
+            return make.compareTo(o.make);
+        }
 
-              }else
-                  return
-          }else
-              return model.compareTo(o.model);
-       }else
-           return make.compareTo(o.make);
+        if (model.compareTo(o.model) != 0) {
+            return model.compareTo(o.model);
+        }
+        if (carType.compareTo(o.carType) != 0) {
+            return carType.compareTo(o.carType);
+        }
 
+        if (engine.compareTo(o.engine) != 0) {
+            return engine.compareTo(o.engine);
+        }
+
+        if (doorNumber.compareTo(o.doorNumber) != 0) {
+            return doorNumber.compareTo(o.doorNumber);
+        }
+
+        if (fuelType.compareTo(o.fuelType) != 0) {
+            return fuelType.compareTo(o.fuelType);
+        }
+
+        if (color.compareTo(o.color) != 0) {
+            return color.compareTo(o.color);
+        }
+
+        if (transmissionType.compareTo(o.transmissionType) != 0) {
+            return transmissionType.compareTo(o.transmissionType);
+        }
+
+        if (year.compareTo(o.year) != 0) {
+            return year.compareTo(o.year);
+        }
+        if (basePrice.compareTo(o.basePrice) != 0) {
+            return basePrice.compareTo(o.basePrice);
+        }
+        if (availability.compareTo(o.availability) != 0) {
+            return availability.compareTo(o.availability);
+        }
+
+        return 0;
     }
 }

@@ -12,10 +12,7 @@ import ro.jademy.carRent.car.Engine;
 import ro.jademy.carRent.people.Salesman;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
-import java.util.Scanner;
+import java.util.*;
 
 public class Shop {
     //hashSet
@@ -23,7 +20,7 @@ public class Shop {
     private ArrayList<Dacia> daciaCars = new ArrayList<>();
     private ArrayList<Audi> audiCars = new ArrayList<>();
     //hashMap
-    private ArrayList<Car> cars = new ArrayList<>();
+    private ArrayList<Car> carList = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
 
     public Shop() {
@@ -53,28 +50,32 @@ public class Shop {
                 "Rented");
         // audiCars.addAll(Arrays.asList(a4, a6));
 
-        cars.addAll(Arrays.asList(duster, sandero, a4, a6));
+        carList.addAll(Arrays.asList(duster, sandero, a4, a6));
     }
 
     public boolean login() {
+        boolean isLogin=false;
+        do {
+            // TODO: implement a basic user login
+            // Scanner scan = new Scanner(System.in);
+            System.out.println("Please enter your username and your password");
+            System.out.println("Username:");
 
-        // TODO: implement a basic user login
-        // Scanner scan = new Scanner(System.in);
-        System.out.println("Please enter your username and your password");
-        System.out.println("Username:");
-        String username = sc.nextLine();
-        for (Salesman salesman : salesmens) {
-            if (username.equals(salesman.getUsername())) {
-                System.out.println("Password:");
-                String password = sc.nextLine();
-                if (password.equals(salesman.getPassword())) {
-                    System.out.println(username + " successfully logged in.");
-                    return false;
+            String username = sc.nextLine();
+            for (Salesman salesman : salesmens) {
+                if (username.equals(salesman.getUsername())) {
+                    System.out.println("Password:");
+                    String password = sc.nextLine();
+                    if (password.equals(salesman.getPassword())) {
+                        System.out.println(username + " successfully logged in.");
+                        isLogin=true;
+                        return false;
+                    }
                 }
             }
-        }
+            System.out.println("Wrong username or password , try again.");
+        }while(isLogin==false);
 
-        System.out.println("Wrong username or password , try again.");
         return true;
     }
 
@@ -91,7 +92,7 @@ public class Shop {
 
         GregorianCalendar endDate = new GregorianCalendar();
 
-        for (Car car : cars) {
+        for (Car car : carList) {
 
             if (car.getModel().equals(carModel)) {
 
@@ -155,17 +156,17 @@ public class Shop {
         System.out.println(" -----------------------------------------------");
         System.out.println();
         System.out.println("                    MAIN MENU                   ");
-        System.out.println("1. List all cars");
-        System.out.println("2. List available cars");
-        System.out.println("3. List rented cars");
+        System.out.println("1. List all carList");
+        System.out.println("2. List available carList");
+        System.out.println("3. List rented carList");
         System.out.println("4. Check income");
-        System.out.println("5. Logout");
-        System.out.println("6. Exit");
+        System.out.println("5. Login");
+        System.out.println("6. Logout");
+        System.out.println("7. Exit");
         optionMenu();
     }
 
     public void optionMenu() {
-
         System.out.println("Insert the number:");
 
         int number = sc.nextInt();
@@ -177,6 +178,7 @@ public class Shop {
             case 2:
                 showListAvailableCars();
                 break;
+
             case 3:
                 showListRentedCars();
                 break;
@@ -184,9 +186,12 @@ public class Shop {
                 checkIncome();
                 break;
             case 5:
-                logout();
+                login();
                 break;
             case 6:
+                logout();
+                break;
+            case 7:
                 System.exit(0);
                 break;
         }
@@ -195,7 +200,7 @@ public class Shop {
     public void showListAllCars() {
         //System.out.println();
         showHeader();
-        for (Car car : cars) {
+        for (Car car : carList) {
             car.showCarSpecifications();
         }
     }
@@ -218,7 +223,7 @@ public class Shop {
     public void showListAvailableCars() {
         showHeader();
         System.out.println();
-        for (Car car : cars) {
+        for (Car car : carList) {
             if (car.getAvailability().equals("Available")) {
                 car.showCarSpecifications();
             }
@@ -228,7 +233,7 @@ public class Shop {
     public void showListRentedCars() {
         showHeader();
         System.out.println();
-        for (Car car : cars) {
+        for (Car car : carList) {
             if (car.getAvailability().equals("Rented")) {
                 car.showCarSpecifications();
             }
@@ -243,13 +248,14 @@ public class Shop {
 
         CarState carState = new CarState();
 
-        for (Car car : cars) {
+        for (Car car : carList) {
 
             if (car.getCarState().isRented()) {
 
                 GregorianCalendar startDate = carState.getStartDate();
 
-                GregorianCalendar endDate = carState.getStartDate();;
+                GregorianCalendar endDate = carState.getStartDate();
+                ;
 
                 finalPrice = daysBetween(startDate, endDate).multiply(car.getBasePrice());
 
@@ -312,7 +318,7 @@ public class Shop {
         String makeCar = sc.next();
         showHeader();
         System.out.println();
-        for (Car car : cars) {
+        for (Car car : carList) {
             if (car.getMake().equals(makeCar)) {
                 car.showCarSpecifications();
             }
@@ -325,7 +331,7 @@ public class Shop {
         String modelCar = sc.next();
         showHeader();
         System.out.println();
-        for (Car car : cars) {
+        for (Car car : carList) {
             if (car.getModel().equals(modelCar)) {
                 car.showCarSpecifications();
             }
@@ -338,13 +344,14 @@ public class Shop {
         System.out.println("Enter the available amount");
         BigDecimal availableAmount = sc.nextBigDecimal();
         showHeader();
-        for (Car car : cars) {
+        for (Car car : carList) {
             if (car.getBasePrice().compareTo(availableAmount) == -1
                     || car.getBasePrice().compareTo(availableAmount) == 0) {
                 car.showCarSpecifications();
             }
         }
     }
+
     public BigDecimal daysBetween(GregorianCalendar startDate, GregorianCalendar endDate) {
 
         long differenceInSeconds = (endDate.getTimeInMillis() - startDate.getTimeInMillis()) / (1000 * 60 * 60 * 24);
@@ -352,7 +359,15 @@ public class Shop {
         return new BigDecimal(differenceInSeconds);
 
 
+    }
 
+    public void sortCarListDefault() {
+        Collections.sort(carList);
+        showHeader();
+
+        for (Car car : carList) {
+            car.showCarSpecifications();
+        }
     }
 
     public void backToPreviousMenu() {

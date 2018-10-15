@@ -6,8 +6,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("hue");
         Shop shop=new Shop();
-
-       // shop.showMenu();
+      //  shop.sortCarListDefault();
+        shop.showMenu();
 
 
         //shop.showHeader();
